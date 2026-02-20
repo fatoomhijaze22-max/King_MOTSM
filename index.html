@@ -3,230 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🎀 لعيون أغلى الناس 🎀</title>
+    <title>🎀 لمفاجأة ست البنات 🎀</title>
     <style>
-        :root {
-            --glass: rgba(255, 255, 255, 0.2);
-            --pink-glow: #ff4d6d;
+        body { background-color: #ffeef8; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; font-family: 'Segoe UI', Tahoma, sans-serif; overflow: hidden; }
+        #box { background: white; border-radius: 25px; padding: 30px; box-shadow: 0 15px 30px #ffb6c1; text-align: center; border: 4px solid #ffb6c1; width: 85%; max-width: 400px; position: relative; z-index: 10; }
+        .kitty-container { position: relative; display: block; margin-bottom: 20px; }
+        
+        /* هاد السطر رح يخلي الصورة واضحة وبحجم مثالي */
+        .kitty-img { width: 180px; height: auto; transition: 0.3s; filter: drop-shadow(0 5px 10px rgba(0,0,0,0.1)); }
+        
+        h1 { color: #d63384; font-size: 1.3rem; line-height: 1.6; min-height: 80px; }
+        input { padding: 12px; border-radius: 12px; border: 2px solid #ffb6c1; width: 80%; outline: none; text-align: center; font-size: 16px; margin-bottom: 10px; }
+        button { background: #ffb6c1; border: none; padding: 12px 30px; border-radius: 12px; color: white; font-weight: bold; cursor: pointer; font-size: 1rem; }
+        
+        #kiss { position: absolute; top: 0; left: 50%; transform: translateX(-50%); font-size: 50px; opacity: 0; pointer-events: none; }
+        @keyframes kissAnimation {
+            0% { opacity: 0; transform: translateX(-50%) scale(0.5); }
+            50% { opacity: 1; transform: translateX(-50%) scale(2); }
+            100% { opacity: 0; transform: translateX(-50%) scale(4); top: -150px; }
         }
-
-        body {
-            background: #0f0c29;
-            background: linear-gradient(to bottom, #24243e, #302b63, #0f0c29);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            font-family: 'Cairo', sans-serif;
-            overflow: hidden;
-            perspective: 1000px;
-        }
-
-        /* خلفية النجوم المتحركة */
-        .stars {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 1;
-        }
-
-        /* البطاقة الزجاجية */
-        .glass-card {
-            background: var(--glass);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 30px;
-            padding: 40px;
-            width: 85%;
-            max-width: 450px;
-            text-align: center;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.5), inset 0 0 20px rgba(255,255,255,0.2);
-            z-index: 10;
-            transform-style: preserve-3d;
-            animation: cardFloat 4s ease-in-out infinite;
-        }
-
-        h1 {
-            color: #fff;
-            text-shadow: 0 0 10px var(--pink-glow);
-            font-size: 1.4rem;
-            line-height: 1.8;
-            margin-bottom: 20px;
-        }
-
-        input {
-            background: rgba(255,255,255,0.1);
-            border: 2px solid #ff85a2;
-            padding: 15px;
-            border-radius: 15px;
-            width: 85%;
-            color: #fff;
-            font-size: 18px;
-            text-align: center;
-            outline: none;
-            margin-bottom: 20px;
-        }
-
-        button {
-            background: linear-gradient(45deg, #ff4d6d, #ff85a2);
-            border: none;
-            padding: 15px 40px;
-            border-radius: 50px;
-            color: white;
-            font-weight: bold;
-            font-size: 1.1rem;
-            cursor: pointer;
-            box-shadow: 0 10px 20px rgba(255, 77, 109, 0.4);
-            transition: 0.3s;
-        }
-
-        button:hover {
-            transform: scale(1.1) rotate(2deg);
-            box-shadow: 0 15px 30px rgba(255, 77, 109, 0.6);
-        }
-
-        /* هالو كيتي الطائرة */
-        .kitty-pilot {
-            position: absolute;
-            width: 120px;
-            z-index: 5;
-            transition: 1s ease-in-out;
-            filter: drop-shadow(0 0 15px var(--pink-glow));
-        }
-
-        /* القلوب المتطايرة عند الضغط */
-        .heart-pop {
-            position: absolute;
-            pointer-events: none;
-            animation: pop 1s ease-out forwards;
-        }
-
-        @keyframes cardFloat {
-            0%, 100% { transform: translateY(0) rotateX(5deg); }
-            50% { transform: translateY(-20px) rotateX(-5deg); }
-        }
-
-        @keyframes pop {
-            0% { transform: scale(0); opacity: 1; }
-            100% { transform: scale(3) translateY(-100px); opacity: 0; }
-        }
-
-        @keyframes fall {
-            to { transform: translateY(110vh) rotate(360deg); }
-        }
-
-        .final-text {
-            color: #ffdae0;
-            font-weight: bold;
-            font-size: 1.3rem;
-            animation: fadeIn 2s;
-        }
-
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .falling-item { position: absolute; top: -20px; font-size: 20px; z-index: 1; animation: fall linear forwards; }
+        @keyframes fall { to { transform: translateY(100vh) rotate(360deg); opacity: 0; } }
     </style>
 </head>
 <body>
-
-    <div class="stars" id="starField"></div>
-
-    <img src="https://i.pinimg.com/originals/f3/d3/1a/f3d31a57c834a0499d3066d56d116c90.png" 
-         class="kitty-pilot" id="flyingKitty" style="top: 10%; right: 10%;">
-
-    <div class="glass-card">
-        <h1 id="mainText">أويييييه! أنا لولو كيتي.. <br>ممكن أعرف شو اسم القمر؟ ✨</h1>
-        <div id="ui">
-            <input type="text" id="nameInp" placeholder="اسمك هون يا قمر...">
+    <div id="box">
+        <div class="kitty-container">
+            <img src="https://i.pinimg.com/originals/f3/d3/1a/f3d31a57c834a0499d3066d56d116c90.png" class="kitty-img" id="kitty">
+            <div id="kiss">❤️</div>
+        </div>
+        <h1 id="text">أويييييه! أنا هالو كيتي.. <br>ممكن أعرف شو اسم القمر؟ ✨</h1>
+        <div id="action-area">
+            <input type="text" id="nameInp" placeholder="اكتبي اسمك هون...">
             <br>
-            <button onclick="advanceStory()">دخول لعالم العشق 💖</button>
+            <button onclick="startStory()">إرسال 🎀</button>
         </div>
     </div>
 
     <script>
-        let step = 0;
-        let userName = "";
-        const kitty = document.getElementById('flyingKitty');
-
-        const phrases = [
-            "يا مية وردة وفلة لـ [NAME]! شرفتي مملكة معتصم.. 😍",
-            "معتصم وصاني قلك: 'أنتي النجمة اللي بتمشي على الأرض'.. 🌟",
-            "بيحكيلي إنه كل دقة بقلبه بتنادي باسمك، وإنك النفس اللي بيتنفسه.. ❤️",
-            "بيقول كمان: 'يا ريت كل البشر بجمال قلبك يا [NAME]'.. 🥺",
-            "أنا كـ كيتي، شفت حب كتير، بس متل حب معتصم إلك ما شفت! 🎀",
-            "جاهزة تشوفي اعترافه الأخير والنهائي؟ ❤️"
+        let step = 0; let userName = "";
+        const story = [
+            "يوبشني هالاسم يا [NAME]! بتعرفي إنه هاد أحلى اسم مرق عليّ اليوم؟ 😍",
+            "بصراحة.. أنا حاملة بقلبي الصغير أمانة كبيرة من شخص بيحبك.. 🥺",
+            "بيحكيلي إنك الصبر والأمل اللي بخليه يبتسم دايماً.. 🌟",
+            "وقلي كمان.. إنه روحه معلقة بروحك للأبد.. 💍",
+            "جاهزة تشوفي الرسالة اللي انكتبت خصيصاً إلك؟ ❤️"
         ];
 
-        // إنشاء نجوم في الخلفية
-        for (let i = 0; i < 50; i++) {
-            let star = document.createElement('div');
-            star.style.position = 'absolute';
-            star.style.width = '2px';
-            star.style.height = '2px';
-            star.style.background = '#fff';
-            star.style.left = Math.random() * 100 + 'vw';
-            star.style.top = Math.random() * 100 + 'vh';
-            star.style.opacity = Math.random();
-            document.getElementById('starField').appendChild(star);
-        }
-
-        function moveKitty() {
-            const x = Math.random() * 70 + 5;
-            const y = Math.random() * 70 + 5;
-            kitty.style.left = x + '%';
-            kitty.style.top = y + '%';
-        }
-
-        function createHeart() {
-            for(let i=0; i<15; i++) {
-                const heart = document.createElement('div');
-                heart.innerHTML = "❤️";
-                heart.className = 'heart-pop';
-                heart.style.left = Math.random() * 100 + 'vw';
-                heart.style.top = '100vh';
-                heart.style.fontSize = Math.random() * 30 + 10 + 'px';
-                heart.style.animation = `fall ${Math.random() * 3 + 2}s linear forwards`;
-                document.body.appendChild(heart);
-                setTimeout(() => heart.remove(), 4000);
+        function createEffect() {
+            const items = ['🌸', '🌹', '💖', '✨', '🎀'];
+            for(let i=0; i<8; i++) {
+                setTimeout(() => {
+                    const item = document.createElement('div');
+                    item.className = 'falling-item';
+                    item.innerHTML = items[Math.floor(Math.random() * items.length)];
+                    item.style.left = Math.random() * 100 + 'vw';
+                    item.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                    document.body.appendChild(item);
+                    setTimeout(() => item.remove(), 4000);
+                }, i * 150);
             }
         }
 
-        function advanceStory() {
+        function startStory() {
             if (step === 0) {
                 userName = document.getElementById('nameInp').value;
                 if (!userName) return;
                 document.getElementById('nameInp').style.display = "none";
             }
-
-            moveKitty();
-            createHeart();
-
-            if (step < phrases.length) {
-                document.getElementById('mainText').innerHTML = phrases[step].replace("[NAME]", userName);
-                document.querySelector('button').innerHTML = (step === phrases.length - 1) ? "افتحي قلبه ❤️" : "كَمّلي.. ✨";
+            createEffect();
+            if (step < story.length) {
+                document.getElementById('text').innerHTML = story[step].replace("[NAME]", userName);
                 step++;
             } else {
-                showFinal();
+                document.getElementById('kiss').style.animation = "kissAnimation 1.5s ease-out forwards";
+                document.getElementById('text').innerHTML = `<div style="color: #c2185b; font-weight: bold;">
+                    ❤️❤️❤️<br>يا ${userName}، أنتي عالمي كله!<br>الله يخليلي ياكي يا نبض القلب! ✨<br>❤️❤️❤️</div>`;
+                document.querySelector('button').style.display = "none";
+                setInterval(createEffect, 1000);
             }
-        }
-
-        function showFinal() {
-            kitty.style.transform = "scale(2) rotate(-20deg)";
-            kitty.style.left = "50%";
-            kitty.style.top = "10%";
-            kitty.style.translate = "-50%";
-            
-            document.getElementById('mainText').innerHTML = `
-                <div class="final-text">
-                    💖 يا ${userName} 💖<br><br>
-                    أنتي لستي مجرد حبيبة، أنتي السند، <br>
-                    أنتي الضحكة اللي بتنسيني همومي..<br>
-                    بدي ياكي تعرفي إني بعشقك لدرجة الموت، <br>
-                    وإنه حياتي بدونك ما الها طعم! ✨<br><br>
-                    الله يخليلي ياكي يا "نبض القلب" ❤️
-                </div>
-            `;
-            document.querySelector('button').style.display = "none";
-            setInterval(createHeart, 1000);
         }
     </script>
 </body>
