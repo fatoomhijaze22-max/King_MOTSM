@@ -5,43 +5,78 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🎀 مفاجأة لست البنات 🎀</title>
     <style>
-        body { background-color: #ffeef8; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; font-family: 'Segoe UI', Tahoma, sans-serif; overflow: hidden; }
+        body { 
+            background-color: #ffeef8; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            margin: 0; 
+            font-family: 'Segoe UI', Tahoma, sans-serif; 
+            overflow-x: hidden; 
+        }
         
-        /* الحاوية الرئيسية لتوزيع العناصر يمين ويسار */
-        .main-container { display: flex; align-items: center; gap: 20px; width: 95%; max-width: 800px; flex-wrap: wrap; justify-content: center; }
-
-        /* مربع الكلام على اليسار */
-        #box { background: white; border-radius: 25px; padding: 25px; box-shadow: 0 15px 30px #ffb6c1; text-align: center; border: 4px solid #ffb6c1; flex: 1; min-width: 280px; position: relative; z-index: 10; }
-
-        /* حاوية هالو كيتي على اليمين */
-        .kitty-container { position: relative; flex-shrink: 0; }
-        .kitty-img { width: 180px; height: auto; transition: 0.3s; filter: drop-shadow(0 5px 15px rgba(0,0,0,0.1)); }
-
-        h1 { color: #d63384; font-size: 1.2rem; line-height: 1.6; min-height: 70px; }
-        input { padding: 12px; border-radius: 12px; border: 2px solid #ffb6c1; width: 80%; outline: none; text-align: center; font-size: 16px; margin-bottom: 10px; }
-        button { background: #ffb6c1; border: none; padding: 12px 30px; border-radius: 12px; color: white; font-weight: bold; cursor: pointer; font-size: 1rem; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        
-        /* أنيميشن البوسة يطلع من فم كيتي */
-        #kiss { position: absolute; bottom: 80px; left: 0; font-size: 50px; opacity: 0; pointer-events: none; }
-        @keyframes kissAnimation {
-            0% { opacity: 0; transform: scale(0.5) translateX(0); }
-            50% { opacity: 1; transform: scale(2) translateX(-50px); }
-            100% { opacity: 0; transform: scale(4) translateX(-150px) translateY(-100px); }
+        /* الحاوية الرئيسية لتوزيع العناصر */
+        .main-container { 
+            display: flex; 
+            align-items: center; 
+            gap: 20px; 
+            width: 90%; 
+            max-width: 700px; 
+            flex-direction: row; /* يمين ويسار */
         }
 
-        .falling-item { position: absolute; top: -20px; font-size: 20px; z-index: 1; animation: fall linear forwards; }
-        @keyframes fall { to { transform: translateY(100vh) rotate(360deg); opacity: 0; } }
-        .fadeIn { animation: fadeIn 2s; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        /* مربع الكلام (يسار) */
+        #box { 
+            background: white; 
+            border-radius: 25px; 
+            padding: 25px; 
+            box-shadow: 0 10px 25px #ffb6c1; 
+            text-align: center; 
+            border: 4px solid #ffb6c1; 
+            flex: 2; 
+            position: relative; 
+            z-index: 10; 
+        }
 
-        /* جعل التصميم متجاوب للموبايل */
+        /* حاوية هالو كيتي (يمين) */
+        .kitty-container { 
+            flex: 1; 
+            display: flex; 
+            justify-content: center; 
+            position: relative; 
+        }
+        
+        .kitty-img { 
+            width: 150px; 
+            height: auto; 
+            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.1));
+        }
+
+        h1 { color: #d63384; font-size: 1.1rem; line-height: 1.5; min-height: 60px; }
+        input { padding: 10px; border-radius: 12px; border: 2px solid #ffb6c1; width: 85%; outline: none; text-align: center; margin-bottom: 10px; }
+        button { background: #ffb6c1; border: none; padding: 10px 25px; border-radius: 12px; color: white; font-weight: bold; cursor: pointer; }
+        
+        /* انيميشن القلب */
+        #kiss { position: absolute; right: 20%; top: 40%; font-size: 40px; opacity: 0; pointer-events: none; z-index: 20; }
+        @keyframes kissAnimation {
+            0% { opacity: 0; transform: scale(0.5) translateX(0); }
+            50% { opacity: 1; transform: scale(2) translateX(-100px); }
+            100% { opacity: 0; transform: scale(4) translateX(-250px) translateY(-100px); }
+        }
+
+        .falling-item { position: absolute; top: -30px; font-size: 20px; z-index: 1; animation: fall linear forwards; }
+        @keyframes fall { to { transform: translateY(100vh) rotate(360deg); opacity: 0; } }
+
+        /* للموبايل: ترتيب العناصر فوق بعض */
         @media (max-width: 600px) {
             .main-container { flex-direction: column-reverse; }
-            .kitty-img { width: 140px; }
+            #box { width: 100%; }
         }
     </style>
 </head>
 <body>
+
     <div class="main-container">
         <div id="box">
             <h1 id="text">أويييييه! أنا هالو كيتي.. <br>ممكن أعرف شو اسم القمر؟ ✨</h1>
@@ -53,7 +88,7 @@
         </div>
 
         <div class="kitty-container">
-            <img src="kitty.jpg" class="kitty-img" id="kitty" alt="Hello Kitty">
+            <img src="https://i.pinimg.com/originals/f3/d3/1a/f3d31a57c834a0499d3066d56d116c90.png" class="kitty-img" alt="Kitty">
             <div id="kiss">❤️</div>
         </div>
     </div>
@@ -64,18 +99,18 @@
 
         const story = [
             "يوبشني هالاسم يا [NAME]! بتعرفي إنه هاد أحلى اسم مرق عليّ اليوم؟ 😍",
-            "بصراحة.. أنا مو بس جاي أسلم عليكي، أنا حاملة بقلبي الصغير أمانة كبيرة.. 🥺",
-            "في شخص دايب بدباديبك، وما بيمر يوم إلا وصورتك بباله وضحكتك بقلبه.. ❤️",
-            "قلي خبرها إنها مو بس حبيبة، هي الأهل وهي السند وهي الروح اللي بتنفسها.. ✨",
-            "بيحكيلي إنك الصبر اللي بيتحمله، والأمل اللي بخليه يبتسم حتى بعز تعبه.. 🌟",
+            "بصراحة.. أنا حاملة بقلبي الصغير أمانة كبيرة إلك.. 🥺",
+            "في شخص دايب بدباديبك، وما بيمر يوم إلا وصورتك بباله.. ❤️",
+            "قلي خبرها إنها مو بس حبيبة، هي الروح اللي بتنفسها.. ✨",
+            "بيحكيلي إنك الصبر والأمل اللي بخليه يبتسم دايماً.. 🌟",
             "وقلي كمان.. إنه العشق اللي بقلبه إلك ما بتوصفه مجلدات..",
-            "سألته طيب شو أكتبلها؟ قالي اكتبي إنه 'روحي معلقة بروحها'.. 💍",
-            "جاهزة تشوفي الرسالة اللي انكتبت بماء الذهب خصيصاً إلك؟ ❤️"
+            "قالي اكتبي إنه 'روحي معلقة بروحها'.. 💍",
+            "جاهزة تشوفي أغلى رسالة انكتبت إلك؟ ❤️"
         ];
 
         function createEffect() {
-            const items = ['🌸', '🌹', '💖', '✨', '🎀', '🌷'];
-            for(let i=0; i<10; i++) {
+            const items = ['🌸', '🌹', '💖', '✨', '🎀'];
+            for(let i=0; i<8; i++) {
                 setTimeout(() => {
                     const item = document.createElement('div');
                     item.classList.add('falling-item');
@@ -84,7 +119,7 @@
                     item.style.animationDuration = (Math.random() * 2 + 2) + 's';
                     document.body.appendChild(item);
                     setTimeout(() => item.remove(), 4000);
-                }, i * 150);
+                }, i * 200);
             }
         }
 
@@ -96,10 +131,8 @@
             }
             createEffect();
             if (step < story.length) {
-                let currentText = story[step].replace("[NAME]", userName);
-                document.getElementById('text').innerHTML = currentText;
-                document.querySelector('button').innerHTML = "وبعدين؟ ✨";
-                if (step === story.length - 1) document.querySelector('button').innerHTML = "افتحي أغلى رسالة ❤️";
+                document.getElementById('text').innerHTML = story[step].replace("[NAME]", userName);
+                document.querySelector('button').innerHTML = (step === story.length - 1) ? "افتحي الرسالة ❤️" : "وبعدين؟ ✨";
                 step++;
             } else {
                 showFinalMessage();
@@ -107,17 +140,12 @@
         }
 
         function showFinalMessage() {
-            const kiss = document.getElementById('kiss');
-            kiss.style.animation = "kissAnimation 1.5s ease-out forwards";
-            
+            document.getElementById('kiss').style.animation = "kissAnimation 1.5s ease-out forwards";
             document.getElementById('text').innerHTML = `
-                <div class="fadeIn" style="color: #c2185b; font-weight: bold;">
+                <div style="color: #c2185b; font-weight: bold; animation: fadeIn 2s;">
                     ❤️❤️❤️<br>
                     يا ${userName}، في الروح عشقٌ لا ينتهي..<br>
-                    فكيف لا تدمنكِ روحي وأنتِ دوائها؟<br><br>
-                    أنتِ لستِ فقط الجزء الجميل في عالمي،<br>
-                    أنتِ عالمي بأكمله.. <br>
-                    كل كلمة حب بالدنيا ما بتكفيكي،<br>
+                    أنتِ لستِ جزءاً من عالمي، أنتِ عالمي كله!<br>
                     الله يخليلي ياكي يا نبض القلب! ✨<br>
                     ❤️❤️❤️
                 </div>
