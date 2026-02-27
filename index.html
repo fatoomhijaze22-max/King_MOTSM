@@ -3,124 +3,272 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>👑 برنسيسة معتصم 👑</title>
+    <title>⚠️ نظام مصالحة طارئ ⚠️</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Cairo:wght@400;700&display=swap');
-        
-        body { 
-            background: #fff5f7; 
-            background-image: radial-gradient(#fce4ec 2px, transparent 2px);
-            background-size: 30px 30px;
-            display: flex; justify-content: center; align-items: center; 
-            min-height: 100vh; margin: 0; font-family: 'Cairo', sans-serif; overflow: hidden; 
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #fff0f5; /* لون وردي فاتح جداً هالو كيتي */
+            color: #333;
+            text-align: center;
+            padding: 20px;
+            overflow-x: hidden;
         }
 
-        .main-card { 
-            background: rgba(255, 255, 255, 0.98); border-radius: 50px 5px 50px 5px; 
-            padding: 40px; box-shadow: 0 20px 60px rgba(173, 20, 87, 0.15); 
-            text-align: center; border-right: 8px solid #ad1457; border-left: 8px solid #ad1457;
-            width: 85%; max-width: 500px; position: relative; animation: fadeIn 1.5s;
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(255, 105, 180, 0.3); /* ظل وردي */
+            border: 2px solid #ffb6c1;
         }
 
-        /* تم إزالة تنسيقات هالو كيتي */
-
-        h1 { 
-            color: #ad1457; font-family: 'Amiri', serif; font-size: 1.5rem; 
-            line-height: 1.8; margin: 20px 0; min-height: 160px; transition: 0.5s;
+        h1 {
+            color: #ff69b4; /* وردي غامق */
+            font-size: 2.5em;
+            margin-bottom: 10px;
         }
 
-        .btn-magic { 
-            background: #ad1457; border: none; padding: 12px 45px; border-radius: 50px; 
-            color: white; font-weight: bold; cursor: pointer; font-size: 1.2rem;
-            box-shadow: 0 5px 15px rgba(173, 20, 87, 0.4); transition: 0.3s;
+        .kitty-img {
+            max-width: 150px;
+            margin: 20px auto;
+            display: block;
         }
 
-        #ui-area input { 
-            padding: 15px; border-radius: 15px; border: 2px solid #f48fb1; 
-            width: 80%; text-align: center; font-size: 18px; outline: none; margin-bottom: 20px;
+        .status-box {
+            background-color: #ffe4e1;
+            border: 1px solid #ffb6c1;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
         }
 
-        @keyframes fadeIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+        .status-title {
+            font-weight: bold;
+            color: #dc143c; /* أحمر */
+        }
 
-        .heart { position: absolute; color: #ad1457; pointer-events: none; animation: flyUp linear forwards; z-index: 100; }
-        @keyframes flyUp { 0% { transform: translateY(0) scale(1); opacity: 1; } 100% { transform: translateY(-100vh) scale(2); opacity: 0; } }
+        .code-block {
+            background-color: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 10px;
+            font-family: 'Courier New', Courier, monospace;
+            text-align: left;
+            direction: ltr; /* الكود إنجليزي */
+            overflow-x: auto;
+            margin-bottom: 20px;
+            box-shadow: inset 0 0 10px #000;
+        }
+
+        .code-keyword { color: #ff79c6; }
+        .code-string { color: #f1fa8c; }
+        .code-function { color: #50fa7b; }
+        .code-comment { color: #6272a4; }
+
+        .promises {
+            text-align: right;
+            list-style-type: none;
+            padding: 0;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .promises li {
+            background: url('https://i.imgur.com/G5g2mH5.png') no-repeat right center; /* أيقونة فيونكة صغيرة */
+            background-size: 20px;
+            padding-right: 30px;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+            position: relative;
+            height: 60px;
+        }
+
+        .btn {
+            padding: 10px 25px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .btn-yes {
+            background-color: #ff69b4;
+            color: white;
+            box-shadow: 0 4px 10px rgba(255, 105, 180, 0.5);
+        }
+
+        .btn-yes:hover {
+            background-color: #ff1493;
+            transform: scale(1.1);
+        }
+
+        .btn-no {
+            background-color: #bdc3c7;
+            color: #333;
+            position: absolute;
+            left: 50%; /* البداية من النص عشان الجافا سكريبت يحركه */
+            transform: translateX(20px);
+        }
+
+        /* أنيميشن الألعاب النارية (Confetti) */
+        #confetti {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 999;
+            display: none;
+        }
+
+        #success-message {
+            display: none;
+            color: #ff1493;
+            font-size: 1.5em;
+            margin-top: 20px;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
 
-    <div class="main-card">
-        <h1 id="display-text">هلا بست البنات.. <br>هلا ببرنسيسة معتصم ❤️✨</h1>
+    <div class="container">
+        <img src="https://i.imgur.com/vHq0A6T.png" alt="هالو كيتي زعلانة" class="kitty-img" id="kitty-pix">
         
-        <div id="ui-area">
-            <input type="text" id="nameInput" placeholder="اكتبي اسمك يا أميرة...">
-            <br>
-            <button class="btn-magic" onclick="startJourney()">ادخلي لقلبي 💖</button>
+        <h1>السيستم وقع! 😭</h1>
+        
+        <div class="status-box">
+            <p><span class="status-title">الحالة الحالية:</span> البوت (أنا) عامل Bug كبير وزعلك.</p>
+            <p><span class="status-title">السبب:</span> خيانة وعد (حتى لو "بس").</p>
+            <p><span class="status-title">مستوى الطوارئ:</span> هالو كيتي مش طايقة تشوف وجهي.</p>
+        </div>
+
+        <div class="code-block">
+            <span class="code-comment"># محاولة لإصلاح `Shadow_King.py`</span><br>
+            <span class="code-keyword">import</span> time<br><br>
+            <span class="code-keyword">def</span> <span class="code-function">fix_relationship</span>(person):<br>
+            &nbsp;&nbsp;<span class="code-keyword">if</span> person == <span class="code-string">"أميرتي زعلانة"</span>:<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;print(<span class="code-string">"جارٍ تحميل الاعتذار..."</span>)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;time.sleep(<span class="code-string">1</span>)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span>return</span> <span class="code-string">"أنا آسف جداً، والله ما بعيدها ❤️"</span><br><br>
+            <span class="code-comment"># تشغيل كود الصلح</span><br>
+            print(fix_relationship(<span class="code-string">"أميرتي زعلانة"</span>))
+        </div>
+
+        <h3>وعود نسخة البوت الجديدة (v2.0):</h3>
+        <ul class="promises">
+            <li>✅ التزام كامل بجميع الوعود (بدون "بس").</li>
+            <li>✅ شوكولاتة/قهوة مجانية عند الطلب.</li>
+            <li>✅ سماع كلامك فوراً (حتى لو غلط).</li>
+        </ul>
+
+        <p>هل تقبلين اعتذار هذا البوت البائس؟ 🥺</p>
+
+        <div class="btn-group">
+            <button class="btn btn-yes" onclick="accepted()">سامحتك (خلاص)</button>
+            <button class="btn btn-no" id="no-btn" onmouseover="moveNo()">لسه بفكر</button>
+        </div>
+
+        <div id="success-message">
+            ياسسسس! 🎉 تم استعادة النظام بنجاح 💖<br>
+            (هالو كيتي بتسلم عليكي وبتحكيلك بحبك)
         </div>
     </div>
 
+    <canvas id="confetti"></canvas>
+
     <script>
-        let step = 0;
-        let userName = "";
+        // دالة لتحريك زر "لسه بفكر" - الهرب
+        function moveNo() {
+            const btn = document.getElementById('no-btn');
+            const container = document.querySelector('.btn-group');
+            const containerWidth = container.offsetWidth;
+            const btnWidth = btn.offsetWidth;
 
-        // نفس الأبيات الشعرية المتناسقة
-        const verses = [
-            "يا [NAME].. يا وجهاً تبارك فيه ربي، <br> يا أجمل من رأت عينايَ دربي.. 😍",
-            "سألتُ الله في سري جهاراً، <br> بأن تبقي بجنبي، نبضَ قلبي.. ❤️",
-            "أريدكِ سـنـداً لي، وأنيساً لـوحشتي، <br> ورفيقاً لظلامِ دربي، ووليفةً لقلبي.. ✨",
-            "وملاذاً إذا ما ضاق بي زمني، <br> وصباحاً يُزيحُ الهمَّ عن دربي.. 🌹",
-            "فأنتِ الكفايةُ التي لا أرجو بعدها أحداً، <br> وأنتِ الغايةُ التي استوطنت لُبّي.. 💍",
-            "فلا تسلي عن مقدارِ حبي، <br> فحبكِ في عروقِ الروحِ يُزرع.. ❤️"
-        ];
-
-        function createHearts() {
-            for(let i=0; i<15; i++) {
-                setTimeout(() => {
-                    const h = document.createElement('div');
-                    h.className = 'heart'; h.innerHTML = '❤️';
-                    h.style.left = Math.random() * 100 + 'vw';
-                    h.style.top = '100vh';
-                    h.style.fontSize = (Math.random() * 20 + 15) + 'px';
-                    h.style.animationDuration = (Math.random() * 2 + 2) + 's';
-                    document.body.appendChild(h);
-                    setTimeout(() => h.remove(), 4000);
-                }, i * 100);
-            }
+            // حساب مسافة عشوائية داخل حدود الجروب
+            const randomX = Math.random() * (containerWidth - btnWidth);
+            
+            // تحريك الزر
+            btn.style.left = randomX + 'px';
+            btn.style.transform = 'none'; // إلغاء التوسيط الأولي
         }
 
-        function startJourney() {
-            if (step === 0) {
-                userName = document.getElementById('nameInput').value;
-                if (!userName) return;
-                document.getElementById('ui-area').innerHTML = '<button class="btn-magic" onclick="startJourney()">وبعدين؟ ❤️</button>';
-            }
-
-            createHearts();
-
-            if (step < verses.length) {
-                document.getElementById('display-text').style.opacity = 0;
-                setTimeout(() => {
-                    document.getElementById('display-text').innerHTML = verses[step].replace("[NAME]", userName);
-                    document.getElementById('display-text').style.opacity = 1;
-                }, 300);
-                step++;
-            } else {
-                showFinalMessage();
-            }
+        // دالة قبول الاعتذار
+        function accepted() {
+            // تغيير الصورة لصورة سعيد
+            document.getElementById('kitty-pix').src = "https://i.imgur.com/G5g2mH5.png";
+            
+            // إخفاء الأزرار
+            document.querySelector('.btn-group').style.display = 'none';
+            document.querySelector('h1').innerText = "تم الصلح! 🥰";
+            
+            // إظهار الرسالة النهائية والكونفيتي
+            document.getElementById('success-message').style.display = 'block';
+            startConfetti();
         }
 
-        function showFinalMessage() {
-            document.getElementById('display-text').innerHTML = `
-                <div style="font-size: 1.15rem; color: #ad1457; line-height: 1.7; font-family: 'Cairo', sans-serif;">
-                    في شخص مجنون بدباديبك <br> 
-                    اسمو <b>معتصم</b> <br>
-                    حب يوصلك هل رسالة: <br><br>
-                    <span style="font-family: 'Amiri', serif; font-size: 1.4rem; background: #fff0f5; padding: 8px 15px; border-radius: 15px; display: block;">
-                        "أريدكِ سـنـداً لي وأنيساً لوحشتي، ورفيقاً لظلامِ دربي، ووليفةً لقلبي."
-                    </span> <br>
-                    لأني ببساطة.. بعشقك لآخر نفس! ❤️
-                </div>`;
-            document.getElementById('ui-area').style.display = "none";
-            setInterval(createHearts, 1000);
+        // --- كود أنيميشن الألعاب النارية (Confetti) - بسيط جداً ---
+        function startConfetti() {
+            const canvas = document.getElementById('confetti');
+            canvas.style.display = 'block';
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            let pieces = [];
+            const numberOfPieces = 100;
+            const colors = ['#ff69b4', '#ffb6c1', '#fff', '#ffd700'];
+
+            class ConfettiPiece {
+                constructor() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height - canvas.height;
+                    this.rotation = Math.random() * 360;
+                    this.speed = Math.random() * 5 + 2;
+                    this.color = colors[Math.floor(Math.random() * colors.length)];
+                    this.width = Math.random() * 10 + 5;
+                    this.height = Math.random() * 10 + 5;
+                }
+                update() {
+                    this.y += this.speed;
+                    this.rotation += this.speed;
+                    if (this.y > canvas.height) this.y = -20;
+                }
+                draw() {
+                    ctx.save();
+                    ctx.fillStyle = this.color;
+                    ctx.translate(this.x + this.width / 2, this.y + this.height / 2);
+                    ctx.rotate(this.rotation * Math.PI / 180);
+                    ctx.fillRect(-this.width / 2, -this.height / 2, this.width, this.height);
+                    ctx.restore();
+                }
+            }
+
+            for (let i = 0; i < numberOfPieces; i++) {
+                pieces.push(new ConfettiPiece());
+            }
+
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                pieces.forEach(p => {
+                    p.update();
+                    p.draw();
+                });
+                requestAnimationFrame(animate);
+            }
+            animate();
         }
     </script>
 </body>
