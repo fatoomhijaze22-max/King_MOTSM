@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مفاجأة لجنى ❤️</title>
+    <title>إلى جنى ❤️</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Amiri&family=Cairo:wght@400;700&display=swap');
 
@@ -12,58 +11,46 @@
             font-family: 'Cairo', sans-serif;
             background: #fff5f7;
             margin: 0;
-            overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
-            height: 100vh;
+            min-height: 100vh;
+            overflow-x: hidden;
         }
 
-        /* شخصية هالو كيتي المتحركة */
-        .kitty-container {
-            position: absolute;
-            bottom: 20px;
-            right: 20px;
-            width: 150px;
-            z-index: 100;
+        /* كيتي الصغيرة والمتحركة (مقصوصة برمجياً) */
+        .kitty-mini {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            width: 100px; /* حجم صغير ومناسب */
+            z-index: 1000;
             cursor: pointer;
-            transition: 0.5s;
-            animation: bounce 2s infinite;
+            /* قص الصورة لإظهار وجه كيتي فقط */
+            clip-path: inset(10% 10% 10% 10% round 20%); 
+            animation: kittyMove 3s ease-in-out infinite;
         }
 
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
+        @keyframes kittyMove {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(5deg); }
         }
 
-        /* فقاعة الكلام */
         .bubble {
-            position: absolute;
-            bottom: 180px;
-            right: 50px;
+            position: fixed;
+            bottom: 120px;
+            right: 20px;
             background: white;
-            padding: 15px;
+            padding: 10px 15px;
             border-radius: 20px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             border: 2px solid #ff4d6d;
-            max-width: 200px;
-            text-align: center;
-            font-weight: bold;
+            font-size: 0.9em;
             display: none;
-            z-index: 101;
+            z-index: 1001;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
 
-        .bubble::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            right: 30px;
-            border-width: 10px 10px 0;
-            border-style: solid;
-            border-color: white transparent transparent;
-        }
-
-        .main-card {
+        .container {
             max-width: 500px;
             width: 90%;
             background: white;
@@ -71,19 +58,18 @@
             border-radius: 30px;
             box-shadow: 0 10px 30px rgba(255, 77, 109, 0.2);
             text-align: center;
-            display: none; /* مخفي في البداية */
             border: 1px solid #ffd1dc;
         }
 
-        h1 { font-family: 'Amiri', serif; color: #ff4d6d; }
-
         .player-card {
             background: #cc0000;
-            border: 5px solid #a00000;
             border-radius: 15px;
             padding: 10px;
             margin: 20px 0;
+            border: 5px solid #a00000;
         }
+
+        iframe { width: 100%; height: 80px; border-radius: 10px; border: none; }
 
         .poem {
             font-family: 'Amiri', serif;
@@ -92,71 +78,58 @@
             padding: 15px;
             border-radius: 10px;
             border-right: 5px solid #ff4d6d;
+            line-height: 1.8;
         }
 
-        .btn {
-            padding: 10px 25px;
+        .btn-yes {
+            background: #ff4d6d;
+            color: white;
+            padding: 12px 30px;
             border: none;
             border-radius: 50px;
-            cursor: pointer;
             font-weight: bold;
-            margin: 5px;
+            cursor: pointer;
+            margin-top: 20px;
         }
-
-        .btn-yes { background: #ff4d6d; color: white; }
     </style>
 </head>
 <body>
 
-    <div id="kittyBubble" class="bubble">أهلاً جنى! ممكن تسمعي معتصم شو بدو يقول؟</div>
+    <div id="bubble" class="bubble">جنى.. معتصم بيحبك! ❤️</div>
 
-    <div class="kitty-container" onclick="nextQuestion()">
-        <img src="kitty.jpg" alt="Kitty" style="width: 100%;" id="kittyImg">
+    <div class="kitty-mini" onclick="showTalk()">
+        <img src="kitty.jpg" style="width: 100%;" alt="Kitty">
     </div>
 
-    <div class="main-card" id="mainCard">
-        <h1>إلى جنى.. ❤️</h1>
+    <div class="container">
+        <h1 style="color: #ff4d6d; font-family: 'Amiri';">إلى جنى.. ❤️</h1>
+        
         <div class="player-card">
-            <div style="color:white; margin-bottom:5px;">🎵 محمود التركي - حبيبي هو</div>
-            <iframe src="https://www.youtube.com/embed/SshsX6YI2jQ" height="80" style="width:100%; border-radius:10px; border:none;"></iframe>
+            <div style="color:white; margin-bottom:5px; font-weight:bold;">🎵 محمود التركي - حبيبي هو</div>
+            <iframe src="https://www.youtube.com/embed/SshsX6YI2jQ"></iframe>
         </div>
+
         <div class="poem">
             أعاتبُ قلبي فيكِ إن زادَ نبضُـهُ <br>
-            فأنتِ لهُ النبضاتُ، وأنتِ لهُ الصدرُ
+            فأنتِ لهُ النبضاتُ، وأنتِ لهُ الصدرُ <br>
+            <br>
+            خُـذي الوعـدَ مِني، لا بـديلَ لـحبِّـنا
         </div>
-        <p>سامحتيني؟ 🥺</p>
-        <button class="btn btn-yes" onclick="finish()">نعم سامحتك</button>
+
+        <button class="btn-yes" onclick="sendToTelegram()">سامحتك يا معتصم</button>
     </div>
 
     <script>
-        let step = 0;
-        const bubble = document.getElementById('kittyBubble');
-        const card = document.getElementById('mainCard');
-        const kitty = document.querySelector('.kitty-container');
-
-        // إظهار الفقاعة الأولى بعد ثانية
-        setTimeout(() => {
-            bubble.style.display = 'block';
-        }, 1000);
-
-        function nextQuestion() {
-            step++;
-            if (step === 1) {
-                bubble.innerText = "معتصم كثير ندمان.. بتعرفي إنه بيحبك كثير؟";
-            } else if (step === 2) {
-                bubble.innerText = "طيب شوفي شو حضرلك.. اضغطي عليّ كمان مرة!";
-            } else if (step === 3) {
-                bubble.style.display = 'none';
-                kitty.style.transform = 'scale(0.7) translateY(50px)';
-                card.style.display = 'block';
-            }
+        function showTalk() {
+            const b = document.getElementById('bubble');
+            b.style.display = 'block';
+            setTimeout(() => b.style.display = 'none', 3000);
         }
 
-        function finish() {
-            card.innerHTML = "<h1>شكراً يا أغلى جنى! ❤️</h1><p>وصلتني الرسالة وبحبك للأبد!</p>";
-            fetch(`https://api.telegram.org/bot8345183828:AAEqq2_V3Xu9x0hrk7rTVfl_489VFCW3YGY/sendMessage?chat_id=8115519784&text=${encodeURIComponent("🎉 جنى سامحتك بعد ما حكت مع كيتي! ❤️")}`);
+        function sendToTelegram() {
+            alert("شكراً يا جنى! ❤️");
+            fetch(`https://api.telegram.org/bot8345183828:AAEqq2_V3Xu9x0hrk7rTVfl_489VFCW3YGY/sendMessage?chat_id=8115519784&text=${encodeURIComponent("🎉 جنى سامحتك يا معتصم وكيتي سلمت عليها! ❤️")}`);
         }
     </script>
 </body>
 </html>
-
