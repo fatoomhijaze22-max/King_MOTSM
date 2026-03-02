@@ -6,99 +6,99 @@
 
 <style>
 html,body{
-  margin:0;
-  width:100%;
-  height:100%;
-  overflow:hidden;
-  font-family:Arial;
+    margin:0;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    font-family:Arial;
 }
 
 #scene{
-  position:relative;
-  width:100%;
-  height:100%;
-  background:url("104be3a230ca00148c8b279c1395edcc.jpg") center/cover no-repeat;
+    width:100%;
+    height:100%;
+    position:relative;
+    background:url("104be3a230ca00148c8b279c1395edcc.jpg") center/cover no-repeat;
 }
 
-/* هالو كيتي – كبيرة */
+/* هالو كيتي كبيرة جدا */
 #kitty{
-  position:absolute;
-  width:300px;   /* كبيرة */
-  left:50%;
-  bottom:10px;
-  transform:translateX(-50%);
-  cursor:pointer;
-  filter:drop-shadow(0 10px 18px rgba(0,0,0,.25));
-  animation:softIdle 3.5s ease-in-out infinite;
-  transition:top 2s cubic-bezier(.25,.8,.25,1),
-             left 2s cubic-bezier(.25,.8,.25,1);
+    position:absolute;
+    width:360px;
+    left:50%;
+    bottom:10px;
+    transform:translateX(-50%);
+    transition:left 2s ease, top 2s ease;
+    cursor:pointer;
+    animation:softMove 3.5s infinite ease-in-out;
+    filter:drop-shadow(0 10px 20px rgba(0,0,0,.3));
 }
 
-/* حركة ناعمة (أنوثية) */
-@keyframes softIdle{
-  0%{ transform:translateX(-50%) scale(1) rotate(0deg); }
-  25%{ transform:translateX(-50%) scale(1.02) rotate(1.5deg); }
-  50%{ transform:translateX(-50%) scale(1.03) rotate(0deg); }
-  75%{ transform:translateX(-50%) scale(1.02) rotate(-1.5deg); }
-  100%{ transform:translateX(-50%) scale(1) rotate(0deg); }
+/* حركة لطيفة */
+@keyframes softMove{
+    0%{transform:translateX(-50%) scale(1) rotate(0deg);}
+    25%{transform:translateX(-50%) scale(1.03) rotate(1.5deg);}
+    50%{transform:translateX(-50%) scale(1.05) rotate(0deg);}
+    75%{transform:translateX(-50%) scale(1.03) rotate(-1.5deg);}
+    100%{transform:translateX(-50%) scale(1) rotate(0deg);}
 }
 
-/* بوسة */
-.kiss{
-  animation:kiss 1s ease;
-}
-
-@keyframes kiss{
-  0%{transform:translateX(-50%) scale(1);}
-  50%{transform:translateX(-50%) scale(1.15);}
-  100%{transform:translateX(-50%) scale(1);}
-}
-
-/* سناب 🫰 */
-.snap{
-  animation:snap 0.6s ease;
-}
-
-@keyframes snap{
-  0%{transform:translateX(-50%) rotate(0deg);}
-  25%{transform:translateX(-50%) rotate(8deg);}
-  50%{transform:translateX(-50%) rotate(-8deg);}
-  100%{transform:translateX(-50%) rotate(0deg);}
-}
-
-/* فقاعة */
+/* بالون الكلام */
 #bubble{
-  position:absolute;
-  background:white;
-  padding:14px 18px;
-  border-radius:20px;
-  font-size:17px;
-  display:none;
-  box-shadow:0 6px 15px rgba(0,0,0,.25);
+    position:absolute;
+    background:white;
+    padding:16px 20px;
+    border-radius:25px;
+    font-size:18px;
+    display:none;
+    box-shadow:0 8px 18px rgba(0,0,0,.25);
+}
+
+/* ورود */
+.flower{
+    position:absolute;
+    font-size:24px;
+    animation:fall 3s linear forwards;
+    pointer-events:none;
+}
+
+@keyframes fall{
+    0%{transform:translateY(-30px);opacity:1;}
+    100%{transform:translateY(200px);opacity:0;}
+}
+
+/* رقصة */
+.dance{
+    animation:dance 0.4s infinite alternate;
+}
+
+@keyframes dance{
+    0%{transform:translateX(-50%) rotate(-6deg) scale(1.05);}
+    100%{transform:translateX(-50%) rotate(6deg) scale(1.05);}
 }
 
 #hint{
-  position:absolute;
-  bottom:12px;
-  width:100%;
-  text-align:center;
-  color:white;
-  font-size:15px;
-  text-shadow:0 2px 6px rgba(0,0,0,.6);
+    position:absolute;
+    bottom:12px;
+    width:100%;
+    text-align:center;
+    color:white;
+    font-size:15px;
+    text-shadow:0 2px 6px rgba(0,0,0,.6);
 }
+
 </style>
 </head>
 <body>
 
 <div id="scene">
 
-  <div id="bubble"></div>
+    <div id="bubble"></div>
 
-  <img id="kitty" src="kitty.png">
+    <img id="kitty" src="kitty.png">
 
-  <div id="hint">المسي هالو كيتي ✨</div>
+    <div id="hint">إلمسي هالو كيتي 🌸</div>
 
-  <audio id="song" src="EI2oxQd95z4.mp3"></audio>
+    <audio id="song" src="EI2oxQd95z4.mp3"></audio>
 
 </div>
 
@@ -112,76 +112,72 @@ let started=false;
 let step=0;
 
 const texts=[
-  "هاي بوسة إلك 😘",
-  "اسمعي 🫰",
-  "وجودك كثير لطيف 💗",
-  "لا تزعلـي أبداً ✨",
-  "شغّلت الأغنية إلك 🎵"
+    "أنتِ اليوم قمر 🌙",
+    "لا تزعلـي أبداً 💖",
+    "كل الدنيا بتبتسم لك 🌸",
+    "هاي وردة إلك 🌹",
+    "هسه نرقص سوا 😍"
 ];
 
 function moveSoft(){
-  const w = window.innerWidth  - 320;
-  const h = window.innerHeight - 360;
-
-  const x = Math.random()*w;
-  const y = Math.random()*h;
-
-  kitty.style.left = x+"px";
-  kitty.style.top  = y+"px";
+    const w=window.innerWidth-380;
+    const h=window.innerHeight-420;
+    const x=Math.random()*w;
+    const y=Math.random()*h;
+    kitty.style.left=x+"px";
+    kitty.style.top=y+"px";
 }
 
 function showBubble(t){
-  bubble.innerText=t;
-  bubble.style.display="block";
+    bubble.innerText=t;
+    bubble.style.display="block";
 
-  const r=kitty.getBoundingClientRect();
-  bubble.style.left=(r.left+r.width/2)+"px";
-  bubble.style.top=(r.top-50)+"px";
-  bubble.style.transform="translateX(-50%)";
+    const r=kitty.getBoundingClientRect();
+    bubble.style.left=(r.left+r.width/2)+"px";
+    bubble.style.top=(r.top-70)+"px";
+    bubble.style.transform="translateX(-50%)";
 }
 
-function doKiss(){
-  kitty.classList.remove("snap");
-  kitty.classList.add("kiss");
-  setTimeout(()=>kitty.classList.remove("kiss"),1000);
-}
+function dropFlowers(){
+    for(let i=0;i<8;i++){
+        const f=document.createElement("div");
+        f.className="flower";
+        f.innerText="🌸";
+        f.style.left=(Math.random()*window.innerWidth)+"px";
+        f.style.top="-20px";
+        document.body.appendChild(f);
 
-function doSnap(){
-  kitty.classList.remove("kiss");
-  kitty.classList.add("snap");
-  setTimeout(()=>kitty.classList.remove("snap"),600);
+        setTimeout(()=>f.remove(),3000);
+    }
 }
 
 function startShow(){
-  if(started) return;
-  started=true;
 
-  document.getElementById("hint").style.display="none";
+    if(started) return;
+    started=true;
 
-  moveSoft();
-  showBubble(texts[0]);
-  doKiss();
+    document.getElementById("hint").style.display="none";
 
-  const timer=setInterval(()=>{
-
-    step++;
     moveSoft();
+    showBubble(texts[0]);
 
-    if(step===1){
-      showBubble(texts[1]);
-      doSnap();
-    }else if(step===2){
-      showBubble(texts[2]);
-    }else if(step===3){
-      showBubble(texts[3]);
-    }else if(step===4){
-      showBubble(texts[4]);
-      song.play().catch(()=>{});
-    }else{
-      clearInterval(timer);
-    }
+    const timer=setInterval(()=>{
 
-  },2200);
+        step++;
+        moveSoft();
+        showBubble(texts[step]);
+
+        if(step===3){
+            dropFlowers();
+        }
+
+        if(step===4){
+            song.play().catch(()=>{});
+            kitty.classList.add("dance");
+            clearInterval(timer);
+        }
+
+    },2200);
 }
 
 kitty.addEventListener("click",startShow);
