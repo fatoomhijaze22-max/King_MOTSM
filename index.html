@@ -44,17 +44,19 @@ html,body{
   100%{transform:translate(-50%,-50%) rotate(0deg) scale(1);}
 }
 
-/* بالون الكلام مع تباعد كبير جدًا */
+/* بالون الكلام مع مسافات كبيرة جدًا */
 #bubble{
   position:absolute;
   background:white;
   padding:26px 32px;
   border-radius:35px;
   font-size:24px;
-  line-height:2.5;       /* تباعد كبير جدًا بين السطور */
-  letter-spacing:2px;    /* تباعد كبير بين الحروف */
-  word-spacing:6px;      /* تباعد كبير بين الكلمات */
-  white-space:normal;
+
+  line-height:3;        /* تباعد كبير بين السطور */
+  letter-spacing:2.5px; /* تباعد كبير بين الحروف */
+  word-spacing:8px;     /* تباعد كبير بين الكلمات */
+  white-space:pre-wrap; /* يحافظ على كسور الأسطر */
+
   display:none;
   box-shadow:0 8px 20px rgba(0,0,0,.25);
   z-index:10;
@@ -130,8 +132,10 @@ let moveTimer=null;
 let fxTimer=null;
 let poseTimer=null;
 
-/* النصوص */
+/* النصوص مع الشعر */
 const texts=[
+  "أنتَ الحبيبُ الذي أرجو مَحبتَهُ\nوما سِواكَ بقلبي قطُّ مَسكُونُ",
+  "لو كُنتَ تَعلمُ ما في القلبِ من شَغَفٍ\nلَعذرتَ قلباً بحبِّكَ اليومَ مَفتُونُ",
   "مرحبا يا حلوة 💗",
   "جيت أطمن عليك وأقولك إنك غالية 🌸",
   "لا تخلي شي يكسّر خاطرك ✨",
@@ -171,7 +175,7 @@ function typeText(text){
       clearInterval(typingTimer);
       typingTimer=null;
     }
-  },45);
+  },50);  // سرعة الكتابة ناعمة
 }
 
 /* مؤثرات مستمرة */
@@ -236,7 +240,7 @@ function startShow(){
       startPoses();
       startSmallDanceMove();
     }
-  },3200);
+  },3500);
 }
 
 kitty.addEventListener("click",startShow);
