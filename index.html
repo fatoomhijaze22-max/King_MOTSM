@@ -1,159 +1,256 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>إلى ماريا 🤍</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        body { 
-            font-family: 'Tajawal', sans-serif; 
-            background-color: #000; 
-            color: white;
-            overflow: hidden; 
-        }
-        .bubble {
-            background-color: #1a1a1a;
-            border-radius: 20px;
-            padding: 12px 20px;
-            margin: 10px 0;
-            display: inline-block;
-            max-width: 80%;
-            border: 1px solid #333;
-        }
-        .poem-scroll {
-            max-height: 200px;
-            overflow-y: auto;
-            scrollbar-width: none;
-            mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
-        }
-        .poem-scroll::-webkit-scrollbar { display: none; }
-        
-        .heart-float {
-            position: absolute;
-            pointer-events: none;
-            animation: floatUp 4s ease-in forwards;
-            z-index: 100;
-        }
-        @keyframes floatUp {
-            0% { transform: translateY(100vh) scale(0); opacity: 0; }
-            50% { opacity: 1; }
-            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
-        }
-    </style>
+<meta charset="UTF-8">
+<title> الى وليفه قلبي و ماي برنسيس ماريا   💖</title>
+  
+<style>
+html,body{
+  margin:0;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  font-family:Arial, sans-serif;
+}
+
+/* الخلفية الجديدة */
+#scene{
+  width:100%;
+  height:100%;
+  position:relative;
+  background:url("IMG_20260303_145837_547.jpg") center/cover no-repeat;
+}
+
+/* هالو كيتي */
+#kitty{
+  position:absolute;
+  width:520px;
+  left:50%;
+  top:55%;
+  transform:translate(-50%,-50%);
+  filter:drop-shadow(0 15px 25px rgba(0,0,0,.3));
+  animation:softIdle 4s infinite ease-in-out;
+  transition:left 2.2s ease, top 2.2s ease;
+  cursor:pointer;
+  z-index:5;
+}
+
+/* حركة هالو كيتي ناعمة */
+@keyframes softIdle{
+  0%{transform:translate(-50%,-50%) rotate(0deg) scale(1);}
+  25%{transform:translate(-50%,-50%) rotate(1.2deg) scale(1.02);}
+  50%{transform:translate(-50%,-50%) rotate(0deg) scale(1.04);}
+  75%{transform:translate(-50%,-50%) rotate(-1.2deg) scale(1.02);}
+  100%{transform:translate(-50%,-50%) rotate(0deg) scale(1);}
+}
+
+/* بالون الكلام مع مسافات كبيرة جدًا */
+#bubble{
+  position:absolute;
+  background:white;
+  padding:26px 32px;
+  border-radius:35px;
+  font-size:24px;
+
+  line-height:3;        /* تباعد كبير بين السطور */
+  letter-spacing:2.5px; /* تباعد كبير بين الحروف */
+  word-spacing:8px;     /* تباعد كبير بين الكلمات */
+  white-space:pre-wrap; /* يحافظ على كسور الأسطر */
+
+  display:none;
+  box-shadow:0 8px 20px rgba(0,0,0,.25);
+  z-index:10;
+  max-width:80%;
+  text-align:center;
+}
+
+/* مؤثرات ورد وكيوت */
+.fx{
+  position:absolute;
+  pointer-events:none;
+  animation:fall 3.5s linear forwards;
+  font-size:28px;
+  z-index:3;
+}
+
+@keyframes fall{
+  from{transform:translateY(-30px);opacity:1;}
+  to{transform:translateY(260px);opacity:0;}
+}
+
+/* وضعيات الرقص */
+.pose1{animation:pose1 .6s infinite alternate!important;}
+.pose2{animation:pose2 .6s infinite alternate!important;}
+.pose3{animation:pose3 .6s infinite alternate!important;}
+
+@keyframes pose1{
+  from{transform:translate(-50%,-50%) rotate(-6deg) scale(1.05);}
+  to{transform:translate(-50%,-50%) rotate(6deg) scale(1.05);}
+}
+@keyframes pose2{
+  from{transform:translate(-50%,-50%) rotate(0deg) scale(1.08);}
+  to{transform:translate(-50%,-50%) rotate(0deg) scale(.98);}
+}
+@keyframes pose3{
+  from{transform:translate(-50%,-50%) rotate(4deg) scale(1.03);}
+  to{transform:translate(-50%,-50%) rotate(-4deg) scale(1.03);}
+}
+
+#hint{
+  position:absolute;
+  bottom:15px;
+  width:100%;
+  text-align:center;
+  color:white;
+  font-size:17px;
+  text-shadow:0 2px 6px rgba(0,0,0,.6);
+  z-index:12;
+}
+</style>
 </head>
-<body class="flex items-center justify-center min-h-screen p-4">
+<body>
 
-    <div id="main-card" class="w-full max-w-sm flex flex-col items-center">
-        
-        <div id="step1" class="text-right w-full space-y-4">
-            <div class="bubble float-right">
-                ماريا عندي الج هدية كلش راح تحبيها
-            </div>
-            <div class="w-full clear-both"></div>
-            <button onclick="nextStep(2)" class="bubble bg-gray-800 text-gray-400 float-left flex items-center gap-2">
-                <span>الله شنو هي؟</span>
-                <span class="text-lg">🌚</span>
-            </button>
-        </div>
+<div id="scene">
 
-        <div id="step2" class="hidden w-full text-center space-y-6">
-            <div class="relative inline-block">
-                <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3Z0bmZ6bXF6Znd4ZzR6Znd4ZzR6Znd4ZzR6Znd4ZzR6Znd4ZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/v6aOebdclSowSIsf79/giphy.gif" class="w-48 mx-auto">
-            </div>
-            <p class="text-lg">انتي ماريا؟</p>
-            <button onclick="nextStep(3)" class="bg-pink-600 px-10 py-2 rounded-lg font-bold">هلو ماريا</button>
-        </div>
+  <div id="bubble"></div>
+  <img id="kitty" src="kitty.png">
+  <div id="hint">إلمسي هالو كيتي 🌸</div>
+  <audio id="song" src="EI2oxQd95z4.mp3"></audio>
 
-        <div id="step3" class="hidden w-full text-center space-y-6">
-            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHJpbmZqbmxxdm93bmNidm93bmNidm93bmNidm93bmNidm93JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1z/3o7TKVUn7iM8FMEU24/giphy.gif" class="w-48 mx-auto">
-            <p class="text-lg">بس مستحي اسألج اياه..</p>
-            <button onclick="nextStep(4)" class="bg-pink-600 px-10 py-2 rounded-lg font-bold">اسألني 🙈</button>
-        </div>
+</div>
 
-        <div id="step4" class="hidden w-full text-center space-y-8">
-            <p class="text-xl font-bold">تحبين معتصم لو لا؟!! 👀</p>
-            <div class="flex flex-col items-center gap-4 relative">
-                <button onclick="showFinal()" class="bg-pink-600 px-12 py-3 rounded-full font-bold text-lg w-full">أكيد أحبه! ❤️</button>
-                <button id="noBtn" onmouseover="moveButton()" class="bg-gray-700 px-8 py-2 rounded-full text-sm transition-all duration-75">لا ما احبه 🌚</button>
-            </div>
-        </div>
+<script>
+const kitty  = document.getElementById("kitty");
+const bubble = document.getElementById("bubble");
+const song   = document.getElementById("song");
+const hint   = document.getElementById("hint");
 
-        <div id="step5" class="hidden w-full space-y-6">
-            <div class="bg-[#1a1a1a] p-6 rounded-3xl border border-pink-500/30">
-                <div class="poem-scroll text-pink-200 text-center leading-loose text-sm italic py-4" id="poemArea">
-                    رَقَّت بِوصفِ جَمالِكِ الأَقوالُ <br>
-                    فَإِذا رَأَيتُكِ فَالجَمالُ مُحالُ <br>
-                    يَا مَن إِلَيهِ بَدَا الجَمالُ تَجَمُّلاً <br>
-                    حَتَّى كَأَنَّكِ لِلجَمالِ خَيالُ <br>
-                    كَسَبتِ أَجملَ مَنظرٍ وَمَع المَلاحةِ <br>
-                    وَقَد جَمَعتِ مَحاسِناً مَا تُجمَعُ <br>
-                    اعشقكِ واحبكِ ماريا ❤️
-                </div>
-                <div class="mt-6 flex flex-col items-center gap-2">
-                    <button class="bg-pink-600/20 text-pink-500 px-6 py-1 rounded-full text-xs border border-pink-500/50">اعشقكِ واحبكِ ❤️💍</button>
-                </div>
-            </div>
+let started=false;
+let step=0;
+let typingTimer=null;
+let moveTimer=null;
+let fxTimer=null;
+let poseTimer=null;
 
-            <div class="bg-[#111] p-4 rounded-2xl flex items-center gap-4 border border-gray-800">
-                <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHJpbmZqbmxxdm93bmNidm93bmNidm93bmNidm93bmNidm93JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1z/V9YqV0V7VzW3C/giphy.gif" class="w-12 h-12 rounded-lg">
-                <div class="flex-1">
-                    <p class="text-xs font-bold">اغنيتنا المفضلة 🎵</p>
-                    <div class="w-full bg-gray-800 h-1 mt-2 rounded-full overflow-hidden">
-                        <div class="bg-pink-500 h-full w-2/3"></div>
-                    </div>
-                </div>
-                <div class="flex gap-2">
-                    <span class="text-sm">⏸️</span>
-                </div>
-            </div>
-        </div>
-    </div>
+/* النصوص مع الشعر */
+const texts=[
+  "أنتَ الحبيبُ الذي أرجو مَحبتَهُ\nوما سِواكَ بقلبي قطُّ مَسكُونُ",
+  "لو كُنتَ تَعلمُ ما في القلبِ من شَغَفٍ\nلَعذرتَ قلباً بحبِّكَ اليومَ مَفتُونُ",
+  "مرحبا يا حلوة 💗",
+  "جيت أطمن عليك وأقولك إنك غالية 🌸",
+  "لا تخلي شي يكسّر خاطرك ✨",
+  "الدنيا لسه فيها أشياء حلوة كثير 💖",
+  "أنا بتمنى تبتسمي دايمًا 🌷"
+];
 
-    <script>
-        function nextStep(step) {
-            document.querySelectorAll('#main-card > div').forEach(div => div.classList.add('hidden'));
-            document.getElementById('step' + step).classList.remove('hidden');
-        }
+/* تحرك فقط بمدى صغير */
+function moveSmall(){
+  const cx = window.innerWidth/2;
+  const cy = window.innerHeight/2;
+  const rangeX = 90;
+  const rangeY = 70;
+  const x = cx + (Math.random()*rangeX*2-rangeX);
+  const y = cy + (Math.random()*rangeY*2-rangeY);
+  kitty.style.left = x+"px";
+  kitty.style.top  = y+"px";
+}
 
-        function moveButton() {
-            const btn = document.getElementById('noBtn');
-            const x = Math.random() * (window.innerWidth - btn.clientWidth - 40);
-            const y = Math.random() * (window.innerHeight - btn.clientHeight - 40);
-            btn.style.position = 'fixed';
-            btn.style.left = x + 'px';
-            btn.style.top = y + 'px';
-        }
+/* كتابة ناعمة */
+function typeText(text){
+  if(typingTimer) clearInterval(typingTimer);
 
-        function showFinal() {
-            nextStep(5);
-            confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 }, colors: ['#db2777', '#ffffff'] });
-            
-            // التمرير التلقائي للقصيدة
-            const scrollArea = document.getElementById('poemArea');
-            let scrollAmount = 0;
-            setInterval(() => {
-                scrollAmount += 0.5;
-                if (scrollAmount > scrollArea.scrollHeight) scrollAmount = 0;
-                scrollArea.scrollTop = scrollAmount;
-            }, 50);
+  bubble.style.display="block";
+  bubble.innerText="";
 
-            // قلوب طائرة
-            setInterval(createHeart, 300);
-        }
+  const r=kitty.getBoundingClientRect();
+  bubble.style.left=(r.left+r.width/2)+"px";
+  bubble.style.top =(r.top-95)+"px";
+  bubble.style.transform="translateX(-50%)";
 
-        function createHeart() {
-            const heart = document.createElement('div');
-            heart.innerHTML = '❤️';
-            heart.className = 'heart-float';
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.bottom = '-5vh';
-            heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
-            document.body.appendChild(heart);
-            setTimeout(() => heart.remove(), 4000);
-        }
-    </script>
+  let i=0;
+  typingTimer=setInterval(()=>{
+    bubble.innerText+=text[i];
+    i++;
+    if(i>=text.length){
+      clearInterval(typingTimer);
+      typingTimer=null;
+    }
+  },50);  // سرعة الكتابة ناعمة
+}
+
+/* مؤثرات مستمرة */
+function startFX(){
+  fxTimer=setInterval(()=>{
+    const el=document.createElement("div");
+    el.className="fx";
+    const arr=["🌸","💖","✨","🌷"];
+    el.innerText=arr[Math.floor(Math.random()*arr.length)];
+    el.style.left=Math.random()*window.innerWidth+"px";
+    el.style.top="-20px";
+    document.body.appendChild(el);
+    setTimeout(()=>el.remove(),3500);
+  },450);
+}
+
+/* وضعيات الرقص */
+function startPoses(){
+  const poses=["pose1","pose2","pose3"];
+  let i=0;
+  poseTimer=setInterval(()=>{
+    kitty.classList.remove("pose1","pose2","pose3");
+    kitty.classList.add(poses[i]);
+    i++;
+    if(i>=poses.length) i=0;
+  },700);
+}
+
+/* حركة بطيئة أثناء الرقص */
+function startSmallDanceMove(){
+  moveTimer=setInterval(()=>{
+    moveSmall();
+  },1800);
+}
+
+/* نهاية الأغنية */
+song.addEventListener("ended",()=>{
+  clearInterval(poseTimer);
+  clearInterval(moveTimer);
+  kitty.classList.remove("pose1","pose2","pose3");
+  typeText("بدي أودعك… وبوصيكي تديري بالك ع عصومي 💗");
+});
+
+/* البداية */
+function startShow(){
+  if(started) return;
+  started=true;
+  hint.style.display="none";
+  startFX();
+  moveSmall();
+  typeText(texts[0]);
+
+  const talkTimer=setInterval(()=>{
+    step++;
+    moveSmall();
+    if(step<texts.length){
+      typeText(texts[step]);
+    }
+    if(step===texts.length){
+      clearInterval(talkTimer);
+      song.play().catch(()=>{});
+      startPoses();
+      startSmallDanceMove();
+    }
+  },3500);
+}
+
+kitty.addEventListener("click",startShow);
+kitty.addEventListener("touchstart",startShow);
+
+</script>
+
 </body>
 </html>
+
+
+
+
